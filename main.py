@@ -6,6 +6,10 @@ from functions import *
 console_clear = lambda: os.system('cls')
 
 
+### CONSTANTS ###
+AIM = 21
+
+
 ### DECK OF CARDS ###
 deck_of_cards = {
     "Ace": 11,
@@ -31,14 +35,28 @@ def single_game():
     player_cards = list()
     player_score = 0
     print_player_deck(cards)  # TO DELETE
-    while True:
-        card = cards.pop()
+    user_input = ''
+    while user_input not in ['not', 'no', 'exit']:
+        if player_score > AIM:
+            print("Вы сокрыли перебор и наказаны!!!")
+            break
+        print("Вытаскиваем карту")
+        card = cards.pop(0)  # Вытаскиваем первую карту
         player_cards.append(card)
         player_score += deck_of_cards.get(card, 0)
         print(f"Вы ватащили {card}")
         print(f"Счёт: {player_score}")
         print_player_deck(player_cards)
-        input()
+        user_input = input("Будем продолжать?\n")
+        print()
+    if player_score != AIM:
+        print("Вы проиграли!!!")
+        if player_score < AIM:
+            print(f"Вам не хватило {AIM - player_score}")
+        else:
+            print(f"Вы переборщили на {player_score - AIM}")
+    else:
+        print("Вы выиграли!!!")
 
 
 def main():
@@ -58,4 +76,4 @@ def main():
 if __name__ == "__main__":
     print("Добро пожаловать")
     main()
-    #print("До встречи")
+    print("До встречи")
